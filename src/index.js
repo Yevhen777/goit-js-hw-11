@@ -38,9 +38,21 @@ loadMore.addEventListener('click', async () => {
 
 form.addEventListener('input', textFromInput);
 
-form.addEventListener('submit', submitForm);
+form.addEventListener('submit', async e => {
+  e.preventDefault();
+  loadMore.style.display = 'none';
+  pageData = 1;
+  gallery.innerHTML = '';
 
-const submitForm = async e => {
+  const uploadPhotoDone = await uploadPhoto(inputValue, pageData, perPage);
+  const uploadPhotoDoneArray = uploadPhotoDone.hits;
+  totalHitsMax = uploadPhotoDone.totalHits;
+
+  createMarkup(uploadPhotoDoneArray);
+  loadMore.style.display = 'block';
+});
+
+async e => {
   e.preventDefault();
   loadMore.style.display = 'none';
   pageData = 1;
