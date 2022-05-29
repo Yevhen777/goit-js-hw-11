@@ -21,7 +21,7 @@ loadMore.addEventListener('click', async () => {
   totalHits += perPage;
 
   try {
-    const uploadPhotoDone = await uploadPhoto(inputValue, page, perPage);
+    const uploadPhotoDone = await uploadPhoto(inputValue, pageData, perPage);
     const uploadPhotoDoneArray = uploadPhotoDone.hits;
     totalHitsMax = uploadPhotoDone.totalHits;
 
@@ -46,7 +46,7 @@ const submitForm = async e => {
   pageData = 1;
   gallery.innerHTML = '';
 
-  const uploadPhotoDone = await uploadPhoto(inputValue, page, perPage);
+  const uploadPhotoDone = await uploadPhoto(inputValue, pageData, perPage);
   const uploadPhotoDoneArray = uploadPhotoDone.hits;
   totalHitsMax = uploadPhotoDone.totalHits;
 
