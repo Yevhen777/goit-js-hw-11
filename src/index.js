@@ -1,8 +1,8 @@
 import './css/styles.css';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import 'simplelightbox/dist/simple-lightbox.min.css';
-import { createMarkup } from './js/createMarkup';
-import { uploadPhoto } from './js/getData';
+import { createMarkup } from './js/galleryImg';
+import { uploadPhoto } from './js/axiosGetUrl';
 
 let inputValue = '';
 let pageData = 1;
@@ -21,7 +21,7 @@ loadMore.addEventListener('click', async () => {
   totalHits += perPage;
 
   try {
-    const uploadPhotoDone = await uploadPhoto(inputValue, pageData, perPage);
+    const uploadPhotoDone = await uploadPhoto(inputValue, page, perPage);
     const uploadPhotoDoneArray = uploadPhotoDone.hits;
     totalHitsMax = uploadPhotoDone.totalHits;
 
@@ -38,19 +38,21 @@ loadMore.addEventListener('click', async () => {
 
 form.addEventListener('input', textFromInput);
 
-form.addEventListener('submit', async e => {
+form.addEventListener('submit', submitForm);
+
+const submitForm = async e => {
   e.preventDefault();
   loadMore.style.display = 'none';
   pageData = 1;
   gallery.innerHTML = '';
 
-  const uploadPhotoDone = await uploadPhoto(inputValue, pageData, perPage);
+  const uploadPhotoDone = await uploadPhoto(inputValue, page, perPage);
   const uploadPhotoDoneArray = uploadPhotoDone.hits;
   totalHitsMax = uploadPhotoDone.totalHits;
 
   createMarkup(uploadPhotoDoneArray);
   loadMore.style.display = 'block';
-});
+};
 
 function textFromInput(text) {
   inputValue = text.target.value;
